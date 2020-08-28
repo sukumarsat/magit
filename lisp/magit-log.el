@@ -942,9 +942,11 @@ Type \\[magit-reset] to reset `HEAD' to the commit at point.
           (setq args (cons "--full-history" args)))
       (setq args (remove "--follow" args)))
     (when (and (car magit-log-remove-graph-args)
-               (--any-p (string-match-p
-                         (concat "^" (regexp-opt magit-log-remove-graph-args)) it)
-                        args))
+               (seq-some (## string-match-p
+                             (concat "^"
+                                     (regexp-opt magit-log-remove-graph-args))
+                             %)
+                         args))
       (setq args (remove "--graph" args)))
     (unless (member "--graph" args)
       (setq args (remove "--color" args)))
@@ -956,8 +958,9 @@ Type \\[magit-reset] to reset `HEAD' to the commit at point.
                            (not (string-match-p "\\.\\." revs))
                            (not (member revs '("--all" "--branches")))
                            (-none-p (lambda (arg)
-                                      (--any-p (string-prefix-p it arg)
-                                               magit-log-disable-graph-hack-args))
+                                      (seq-some
+                                       (##string-prefix-p % arg)
+                                       magit-log-disable-graph-hack-args))
                                     args)
                            (magit-git-string "rev-list" "--count"
                                              "--first-parent" args revs))))

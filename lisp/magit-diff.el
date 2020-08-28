@@ -1427,12 +1427,12 @@ instead."
     t))
 
 (defun magit-diff-ignore-any-space-p ()
-  (--any-p (member it magit-buffer-diff-args)
-           '("--ignore-cr-at-eol"
-             "--ignore-space-at-eol"
-             "--ignore-space-change" "-b"
-             "--ignore-all-space" "-w"
-             "--ignore-blank-space")))
+  (car (seq-some (##member % magit-buffer-diff-args)
+                 '("--ignore-cr-at-eol"
+                   "--ignore-space-at-eol"
+                   "--ignore-space-change" "-b"
+                   "--ignore-all-space" "-w"
+                   "--ignore-blank-space"))))
 
 (defun magit-diff-toggle-refine-hunk (&optional style)
   "Turn diff-hunk refining on or off.
@@ -1819,13 +1819,13 @@ commit or stash at point, then prompt for a commit."
                     ((derived-mode-p 'magit-diff-mode)
                      (-filter #'magit-file-section-p
                               (oref magit-root-section children))))))
-    (if (--any-p (oref it hidden) sections)
+    (if (seq-some (##oref % hidden) sections)
         (dolist (s sections)
           (magit-section-show s)
           (magit-section-hide-children s))
       (let ((children (--mapcat (oref it children) sections)))
-        (cond ((and (--any-p (oref it hidden)   children)
-                    (--any-p (oref it children) children))
+        (cond ((and (seq-some (##oref % hidden)   children)
+                    (seq-some (##oref % children) children))
                (mapc 'magit-section-show-headings sections))
               ((seq-some 'magit-section-hidden-body children)
                (mapc 'magit-section-show-children sections))

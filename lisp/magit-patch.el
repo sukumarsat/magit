@@ -119,14 +119,14 @@ which creates patches for all commits that are reachable from
       (save-match-data
         (find-file
          (expand-file-name
-          (concat (--some (and (string-match "\\`--reroll-count=\\(.+\\)" it)
-                               (format "v%s-" (match-string 1 it)))
-                          args)
+          (concat (seq-some (and (string-match "\\`--reroll-count=\\(.+\\)" %)
+                                 (format "v%s-" (match-string 1 %)))
+                            args)
                   "0000-cover-letter.patch")
           (let ((topdir (magit-toplevel)))
-            (or (--some (and (string-match "\\`--output-directory=\\(.+\\)" it)
-                             (expand-file-name (match-string 1 it) topdir))
-                        args)
+            (or (seq-some (and (string-match "\\`--output-directory=\\(.+\\)" %)
+                               (expand-file-name (match-string 1 %) topdir))
+                          args)
                 topdir))))))))
 
 (transient-define-argument magit-format-patch:--in-reply-to ()

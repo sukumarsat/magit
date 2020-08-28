@@ -476,12 +476,14 @@ status buffer is first created."
   "In a `magit-status-mode' buffer, jump `magit-status-initial-section'.
 This function removes itself from `magit-refresh-buffer-hook'."
   (when-let ((section
-              (--some (if (integerp it)
-                          (nth (1- it)
-                               (magit-section-siblings (magit-current-section)
-                                                       'next))
-                        (magit-get-section it))
-                      magit-status-initial-section)))
+              (seq-some (lambda (it)
+                          (if (integerp it)
+                              (nth (1- it)
+                                   (magit-section-siblings
+                                    (magit-current-section)
+                                    'next))
+                            (magit-get-section it))
+                          magit-status-initial-section))))
     (goto-char (oref section start))
     (when-let ((vis (cdr (assq 'magit-status-initial-section
                                magit-section-initial-visibility-alist))))

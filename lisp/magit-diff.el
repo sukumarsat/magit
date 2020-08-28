@@ -2005,7 +2005,7 @@ Staging and applying changes is documented in info node
   (declare (indent 0))
   (let ((magit-git-global-arguments
          (remove "--literal-pathspecs" magit-git-global-arguments)))
-    (setq args (-flatten args))
+    (setq args (flatten-tree args))
     ;; As of Git 2.19.0, we need to generate diffs with
     ;; --ita-visible-in-index so that `magit-stage' can work with
     ;; intent-to-add files (see #4026).  Cache the result for each

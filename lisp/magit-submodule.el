@@ -607,7 +607,7 @@ These sections can be expanded to show the respective commits."
   (setq tabulated-list-format
         (vconcat (mapcar (pcase-lambda (`(,title ,width ,_fn ,props))
                            (nconc (list title width t)
-                                  (-flatten props)))
+                                  (flatten-tree props)))
                          magit-submodule-list-columns)))
   (tabulated-list-init-header)
   (add-hook 'tabulated-list-revert-hook 'magit-submodule-list-refresh nil t)

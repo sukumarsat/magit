@@ -1,5 +1,5 @@
 <div align="center"><img src="https://magit.vc/assets/magit-168x200px.png"/></div>
-<h2 align="center">A Git Porcelain inside Emacs</h2>
+<h2 align="center">A Git Porcelain inside Emacs, edited by Sukumar Satyen</h2>
 <p align="center">
   <a href="https://magit.vc"><b>homepage</b></a> |
   <a href="https://magit.vc/manual"><b>manual</b></a> |
